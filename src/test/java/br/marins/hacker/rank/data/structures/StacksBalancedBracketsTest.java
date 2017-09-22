@@ -2,6 +2,7 @@ package br.marins.hacker.rank.data.structures;
 
 import static br.marins.hacker.rank.data.structures.StacksBalancedBrackets.NO;
 import static br.marins.hacker.rank.data.structures.StacksBalancedBrackets.YES;
+import static br.marins.hacker.rank.util.TestUtil.assertResult;
 import static br.marins.hacker.rank.util.TestUtil.input;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -70,11 +71,5 @@ public class StacksBalancedBracketsTest {
     List<String> result = sut.isBalanced(input);
 
     assertResult(result, NO);
-  }
-
-  private void assertResult(List<String> result, String... expected) {
-    for (int i = 0; i < result.size(); i++) {
-      assertThat((i + 1) +"", result.get(i), equalTo(expected[i]));
-    }
   }
 }
