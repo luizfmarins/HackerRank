@@ -29,7 +29,7 @@ public class ArraysLeftRotation {
   protected int indexRotatedElement(int index, int numberOfRotations, int lenght) {
     int newIndex = index - numberOfRotations;
     if (newIndex < 0) {
-      return lenght - 1;
+      return newIndex + lenght;
     }
     return newIndex;
   }

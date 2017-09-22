@@ -18,13 +18,20 @@ public class ArraysLeftRotationTest {
   private ArraysLeftRotation sut = new ArraysLeftRotation();
 
   @Test
-  public void indexRotatedElement() {
-    testNumberOfRotations(1, 1, 0, 4);
-    testNumberOfRotations(2, 1, 1, 4);
-    testNumberOfRotations(0, 1, 3, 4);
+  public void indexRotatedElement_oneRotation() {
+    testNumberOfRotations(1, 0, 1, 5);
+    testNumberOfRotations(2, 1, 1, 5);
+    testNumberOfRotations(0, 4, 1, 5);
   }
 
-  private void testNumberOfRotations(int index, int numberOfRotations, int expectedNewIndex,
+  @Test
+  public void indexRotatedElement_twoRotation() {
+    testNumberOfRotations(2, 0, 2, 5);
+    testNumberOfRotations(0, 3, 2, 5);
+    testNumberOfRotations(1, 4, 2, 5);
+  }
+
+  private void testNumberOfRotations(int index, int expectedNewIndex, int numberOfRotations,
       int arrayLenght) {
     int newIndex2 = sut.indexRotatedElement(index, numberOfRotations, arrayLenght);
     assertThat(newIndex2, equalTo(expectedNewIndex));
@@ -40,8 +47,17 @@ public class ArraysLeftRotationTest {
   }
 
   @Test
+  public void twoRotation() throws Exception {
+    InputStream input = input("5 2\n", "0 1 2 3 4");
+
+    String[] result = sut.rotateLeft(input);
+
+    assertThat(result, arrayContaining("2", "3", "4", "0", "1"));
+  }
+
+  @Test
   public void forRotations() throws Exception {
-    InputStream input = input("4 5\n", "1 2 3 4 5");
+    InputStream input = input("5 4\n", "1 2 3 4 5");
 
     String[] result = sut.rotateLeft(input);
 
