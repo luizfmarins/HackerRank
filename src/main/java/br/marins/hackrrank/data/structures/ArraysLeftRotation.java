@@ -1,4 +1,4 @@
-package br.marins.hackrrank;
+package br.marins.hackrrank.data.structures;
 
 import java.io.BufferedReader;
 import java.io.IOException;

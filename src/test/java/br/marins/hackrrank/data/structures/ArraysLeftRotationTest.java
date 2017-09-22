@@ -1,4 +1,4 @@
-package br.marins.hackrrank;
+package br.marins.hackrrank.data.structures;
 
 import static java.nio.charset.Charset.defaultCharset;
 import static org.apache.commons.io.IOUtils.write;
