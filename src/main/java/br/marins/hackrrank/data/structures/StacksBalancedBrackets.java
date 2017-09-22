@@ -10,6 +10,8 @@ import java.util.Stack;
 
 public class StacksBalancedBrackets {
 
+  public static final String YES = "YES";
+  public static final String NO = "NO";
   private static final String OPEN_BRACKETS = "{[(";
 
   private Stack<String> stack;
@@ -42,11 +44,11 @@ public class StacksBalancedBrackets {
       if (isOpenBracket(currentBracket)) {
         stack.push(currentBracket);
       } else if (!matchesPreviousBracket(currentBracket)) {
-        return "NO";
+        return NO;
       }
     }
 
-    return "YES";
+    return stack.isEmpty() ? YES : NO;
   }
 
   private boolean isOpenBracket(String bracket) {
@@ -54,6 +56,10 @@ public class StacksBalancedBrackets {
   }
 
   private boolean matchesPreviousBracket(String currentBracket) {
+    if (stack.isEmpty()) {
+      return false;
+    }
+
     String openBracket = stack.pop();
 
     return "(".equals(openBracket) && ")".equals(currentBracket)

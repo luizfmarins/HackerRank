@@ -1,5 +1,7 @@
 package br.marins.hackrrank.data.structures;
 
+import static br.marins.hackrrank.data.structures.StacksBalancedBrackets.NO;
+import static br.marins.hackrrank.data.structures.StacksBalancedBrackets.YES;
 import static java.nio.charset.Charset.defaultCharset;
 import static org.apache.commons.io.IOUtils.write;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -15,12 +17,10 @@ import org.junit.Test;
 
 public class StacksBalancedBracketsTest {
 
-  public static final String YES = "YES";
-  public static final String NO = "NO";
   private StacksBalancedBrackets sut = new StacksBalancedBrackets();
 
   @Test
-  public void test() throws Exception {
+  public void hackerRank_sampleTestCase() throws Exception {
     InputStream input = input(
         "3",
         "{[()]}",
@@ -29,9 +29,58 @@ public class StacksBalancedBracketsTest {
 
     List<String> result = sut.isBalanced(input);
 
-    assertThat(result.get(0), equalTo(YES));
-    assertThat(result.get(1), equalTo(NO));
-    assertThat(result.get(2), equalTo(YES));
+    assertResult(result,
+        YES,
+        NO,
+        YES);
+  }
+
+  @Test
+  public void firstBracketIsClosing() throws Exception {
+    InputStream input = input(
+        "1",
+        "}}");
+
+    List<String> result = sut.isBalanced(input);
+
+    assertResult(result, NO);
+  }
+
+  @Test
+  public void hackerRank_testCase0() throws Exception {
+    InputStream input = input(
+        "5",
+        "}][}}(}][))]",
+        "[](){()}",
+        "()",
+        "({}([][]))[]()",
+        "{)[](}]}]}))}(())(");
+
+    List<String> result = sut.isBalanced(input);
+
+    assertResult(result,
+        NO,
+        YES,
+        YES,
+        YES,
+        NO);
+  }
+
+  @Test
+  public void differentNumberOfBrackets() throws Exception {
+    InputStream input = input(
+        "1",
+        "(){");
+
+    List<String> result = sut.isBalanced(input);
+
+    assertResult(result, NO);
+  }
+
+  private void assertResult(List<String> result, String... expected) {
+    for (int i = 0; i < result.size(); i++) {
+      assertThat((i + 1) +"", result.get(i), equalTo(expected[i]));
+    }
   }
 
   private InputStream input(String line1, String... nextLines) throws IOException {
