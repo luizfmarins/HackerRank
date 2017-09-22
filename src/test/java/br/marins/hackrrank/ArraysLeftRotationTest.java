@@ -64,6 +64,14 @@ public class ArraysLeftRotationTest {
     assertThat(result, arrayContaining("5", "1", "2", "3", "4"));
   }
 
+  @Test
+  public void fiveRotations() throws Exception {
+    InputStream input = input("5 5\n", "1 2 3 4 5");
+
+    String[] result = sut.rotateLeft(input);
+
+    assertThat(result, arrayContaining("1", "2", "3", "4", "5"));
+  }
   private InputStream input(String line1, String line2) throws IOException {
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     PrintStream printer = new PrintStream(out);
