@@ -9,6 +9,15 @@ import java.util.List;
 
 public class ArraysLeftRotation {
 
+  public static void main(String[] args) throws IOException {
+    InputStream in = System.in;
+
+    ArraysLeftRotation arrays = new ArraysLeftRotation();
+    String[] values = arrays.rotateLeft(in);
+
+    arrays.print(values);
+  }
+
   public String[] rotateLeft(InputStream input) throws IOException {
     List<String> lines = doReadLines(input);
 
@@ -23,6 +32,14 @@ public class ArraysLeftRotation {
     }
 
     return rotated;
+  }
+
+  public void print(String[] values) {
+    System.out.print(values[0]);
+
+    for (int i = 1; i < values.length; i++) {
+      System.out.print(" " + values[i]);
+    }
   }
 
   protected int indexRotatedElement(int index, int numberOfRotations, int lenght) {
