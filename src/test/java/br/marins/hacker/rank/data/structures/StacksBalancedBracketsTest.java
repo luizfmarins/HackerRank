@@ -1,7 +1,7 @@
-package br.marins.hackrrank.data.structures;
+package br.marins.hacker.rank.data.structures;
 
-import static br.marins.hackrrank.data.structures.StacksBalancedBrackets.NO;
-import static br.marins.hackrrank.data.structures.StacksBalancedBrackets.YES;
+import static br.marins.hacker.rank.data.structures.StacksBalancedBrackets.NO;
+import static br.marins.hacker.rank.data.structures.StacksBalancedBrackets.YES;
 import static java.nio.charset.Charset.defaultCharset;
 import static org.apache.commons.io.IOUtils.write;
 import static org.hamcrest.MatcherAssert.assertThat;
