@@ -14,6 +14,15 @@ public class StacksBalancedBrackets {
 
   private Stack<String> stack;
 
+  public static void main(String[] args) throws IOException {
+    InputStream in = System.in;
+
+    StacksBalancedBrackets balancedBrackets = new StacksBalancedBrackets();
+    List<String> result = balancedBrackets.isBalanced(in);
+
+    result.forEach(r -> System.out.println(r));
+  }
+
   public List<String> isBalanced(InputStream input) throws IOException {
     List<String> lines = readLines(input);
     List<String> values = getValues(lines);
