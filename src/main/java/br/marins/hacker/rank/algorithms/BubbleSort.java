@@ -26,8 +26,10 @@ public class BubbleSort {
 
     for (int i = 0; i < numberOfValues - 1; i++) {
       boolean swapped = false;
-      for (int j = 1; j < numberOfValues; j++) {
-        if (values[j] < values[i]) {
+      for (int j = i + 1; j < numberOfValues; j++) {
+        int valueJ = values[j];
+        int valueI = values[i];
+        if (valueJ < valueI) {
           swap(values, i, j);
           numberOfSwaps++;
           swapped = true;

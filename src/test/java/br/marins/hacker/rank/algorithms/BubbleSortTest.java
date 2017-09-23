@@ -62,4 +62,17 @@ public class BubbleSortTest {
         "First Element: 1",
         "Last Element: 2");
   }
+
+  @Test
+  public void fourElementArray_reversed() throws Exception {
+    InputStream input = input("4", "4 3 2 1");
+
+    List<String> result = sut.sort(input);
+
+    assertResult(result,
+        "[1, 2, 3, 4]",
+        "Array is sorted in 6 swaps.",
+        "First Element: 1",
+        "Last Element: 4");
+  }
 }
