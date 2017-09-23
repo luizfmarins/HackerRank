@@ -17,13 +17,23 @@ public class BinarySearchIceCreamParlor {
     List<String> lines = readLines(input);
     List<String> values = getValues(lines);
     int money = getMoney(values);
+    int numberOfTrips = getNumberOfTrips(lines);
 
-    List<Integer> flavors = getFlavors(lines);
+    List<List<Integer>> flavorsPerTrip = getFlavors(lines, numberOfTrips);
 
-    return calculateChosenFlavors(money, flavors);
+    return doCalculateBestChoice(money, flavorsPerTrip);
   }
 
-  private List<String> calculateChosenFlavors(int money, List<Integer> flavors) {
+  private List<String> doCalculateBestChoice(int money, List<List<Integer>> flavorsPerTrip) {
+    List<String> result = new ArrayList<>();
+    for (List<Integer> f : flavorsPerTrip) {
+      String chosenFlavors = calculateChosenFlavors(money, f);
+      result.add(chosenFlavors);
+    }
+    return result;
+  }
+
+  private String calculateChosenFlavors(int money, List<Integer> flavors) {
     int[] chosenFlavors = new int[2];
 
     for (int i = 0; i < flavors.size() - 1; i++) {
@@ -40,17 +50,31 @@ public class BinarySearchIceCreamParlor {
     return result(chosenFlavors[0], chosenFlavors[1]);
   }
 
-  private List<Integer> getFlavors(List<String> lines) {
-    return stream(lines.get(3).split(" "))
-        .map(v -> Integer.parseInt(v))
-        .collect(toList());
+  private List<List<Integer>> getFlavors(List<String> lines, int numberOfTrips) {
+    List<List<Integer>> flavorPerTrip = new ArrayList<>();
+
+    int valuesIndex = 3;
+
+    for (int i = 0; i < numberOfTrips; i++) {
+      List<Integer> flavors = extractFlavors(lines, valuesIndex);
+      flavorPerTrip.add(flavors);
+      valuesIndex += 3;
+    }
+
+    return flavorPerTrip;
+  }
+
+  private List<Integer> extractFlavors(List<String> lines, int valuesIndex) {
+    return stream(lines.get(valuesIndex).split(" "))
+          .map(v -> Integer.parseInt(v))
+          .collect(toList());
   }
 
   private int getMoney(List<String> values) {
     return Integer.parseInt(values.get(0));
   }
 
-  private List<String> result(int flavor1, int flavor2) {
+  private String result(int flavor1, int flavor2) {
     flavor1++;
     flavor2++;
 
@@ -58,9 +82,9 @@ public class BinarySearchIceCreamParlor {
         .sorted()
         .collect(toList());
 
-    return asList(String.valueOf(flavors.get(0))
+    return String.valueOf(flavors.get(0))
         + " "
-        + String.valueOf(flavors.get(1)));
+        + String.valueOf(flavors.get(1));
   }
 
   private List<String> readLines(InputStream input) throws IOException {
