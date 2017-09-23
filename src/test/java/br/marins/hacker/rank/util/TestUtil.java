@@ -4,6 +4,7 @@ import static java.nio.charset.Charset.defaultCharset;
 import static org.apache.commons.io.IOUtils.write;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -32,6 +33,8 @@ public class TestUtil {
   }
 
   public static void assertResult(List<String> result, String... expected) {
+    assertThat(result, hasSize(expected.length));
+
     for (int i = 0; i < result.size(); i++) {
       assertThat((i + 1) +"", result.get(i), equalTo(expected[i]));
     }
