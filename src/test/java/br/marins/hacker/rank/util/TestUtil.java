@@ -36,7 +36,7 @@ public class TestUtil {
     assertThat(result, hasSize(expected.length));
 
     for (int i = 0; i < result.size(); i++) {
-      assertThat((i + 1) +"", result.get(i), equalTo(expected[i]));
+      assertThat((i + 1) + "", result.get(i), equalTo(expected[i]));
     }
   }
 }

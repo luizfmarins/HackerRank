@@ -55,7 +55,7 @@ public class BubbleSort {
     result.add(Arrays.toString(values));
     result.add(String.format("Array is sorted in %s swaps.", numberOfSwaps));
     result.add(String.format("First Element: %s", values[0]));
-    result.add(String.format("Last Element: %s", values[values.length-1]));
+    result.add(String.format("Last Element: %s", values[values.length - 1]));
     return result;
   }
 
@@ -63,7 +63,7 @@ public class BubbleSort {
     int valueI = values[i];
     int valueJ = values[j];
 
-    values[i] =valueJ;
+    values[i] = valueJ;
     values[j] = valueI;
   }
 

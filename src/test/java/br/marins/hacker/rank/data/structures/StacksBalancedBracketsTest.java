@@ -4,8 +4,6 @@ import static br.marins.hacker.rank.data.structures.StacksBalancedBrackets.NO;
 import static br.marins.hacker.rank.data.structures.StacksBalancedBrackets.YES;
 import static br.marins.hacker.rank.util.TestUtil.assertResult;
 import static br.marins.hacker.rank.util.TestUtil.input;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 
 import java.io.InputStream;
 import java.util.List;
