@@ -18,6 +18,7 @@ public class BubbleSortTest {
     List<String> result = sut.sort(input);
 
     assertResult(result,
+        "[1, 2, 3]",
         "Array is sorted in 0 swaps.",
         "First Element: 1",
         "Last Element: 3");
@@ -30,6 +31,7 @@ public class BubbleSortTest {
     List<String> result = sut.sort(input);
 
     assertResult(result,
+        "[1, 2, 3]",
         "Array is sorted in 3 swaps.",
         "First Element: 1",
         "Last Element: 3");
