@@ -13,6 +13,15 @@ import java.util.List;
 
 public class BinarySearchIceCreamParlor {
 
+  public static void main(String[] args) throws IOException {
+    InputStream in = System.in;
+
+    BinarySearchIceCreamParlor flavorChoice = new BinarySearchIceCreamParlor();
+    List<String> result = flavorChoice.calculateBestChoice(in);
+
+    result.forEach(r -> System.out.println(r));
+  }
+
   public List<String> calculateBestChoice(InputStream input) throws IOException {
     List<String> lines = readLines(input);
     List<String> values = getValues(lines);
