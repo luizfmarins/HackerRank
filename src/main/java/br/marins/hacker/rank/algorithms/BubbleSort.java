@@ -10,6 +10,15 @@ import java.util.List;
 
 public class BubbleSort {
 
+  public static void main(String[] args) throws IOException {
+    InputStream in = System.in;
+    BubbleSort sorter = new BubbleSort();
+
+    List<String> result = sorter.sort(in);
+
+    sorter.print(result);
+  }
+
   public List<String> sort(InputStream input) throws IOException {
     int values[] = getValues(input);
     int numberOfSwaps = 0;
@@ -31,6 +40,12 @@ public class BubbleSort {
     }
 
     return result(values, numberOfSwaps);
+  }
+
+  private void print(List<String> result) {
+    for (int i = 1; i < result.size(); i++) {
+      System.out.println(result.get(i));
+    }
   }
 
   private List<String> result(int[] values, int numberOfSwaps) {
