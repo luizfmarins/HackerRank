@@ -29,32 +29,33 @@ public class BinarySearchIceCreamParlor {
 
     int numberOfTrips = getNumberOfTrips(lines);
     List<Integer> moneyPerTrip = getMoney(lines, numberOfTrips);
-
-
     List<List<Integer>> flavorsPerTrip = getFlavors(lines, numberOfTrips);
 
-    return doCalculateBestChoice(moneyPerTrip, flavorsPerTrip);
+    List<Trip> trips = new ArrayList<>();
+    for (int i = 0; i < numberOfTrips; i++) {
+      trips.add(new Trip(moneyPerTrip.get(i), flavorsPerTrip.get(i)));
+    }
+
+    return doCalculateBestChoice(trips);
   }
 
-  private List<String> doCalculateBestChoice(List<Integer> moneyPerTryp, List<List<Integer>> flavorsPerTrip) {
+  private List<String> doCalculateBestChoice(List<Trip> trips) {
     List<String> result = new ArrayList<>();
-    for (int i = 0; i < flavorsPerTrip.size(); i++) {
-      Integer money = moneyPerTryp.get(i);
-      List<Integer> flavors = flavorsPerTrip.get(i);
 
-      String chosenFlavors = calculateChosenFlavors(money, flavors);
+    for (Trip trip : trips) {
+      String chosenFlavors = calculateChosenFlavors(trip);
       result.add(chosenFlavors);
     }
     return result;
   }
 
-  private String calculateChosenFlavors(int money, List<Integer> flavors) {
+  private String calculateChosenFlavors(Trip trip) {
     int[] chosenFlavors = new int[2];
 
-    for (int i = 0; i < flavors.size() - 1; i++) {
-      for (int j = i + 1; j < flavors.size(); j++) {
-        int flavorsValue = flavors.get(i) + flavors.get(j);
-        if (money == flavorsValue) {
+    for (int i = 0; i < trip.getFlavorsSize() - 1; i++) {
+      for (int j = i + 1; j < trip.getFlavorsSize(); j++) {
+        int flavorsValue = trip.getFlavor(i) + trip.getFlavor(j);
+        if (trip.getMoney() == flavorsValue) {
           chosenFlavors[0] = i;
           chosenFlavors[1] = j;
           break;
@@ -81,8 +82,8 @@ public class BinarySearchIceCreamParlor {
 
   private List<Integer> extractFlavors(List<String> lines, int valuesIndex) {
     return stream(lines.get(valuesIndex).split(" "))
-          .map(v -> Integer.parseInt(v))
-          .collect(toList());
+        .map(v -> Integer.parseInt(v))
+        .collect(toList());
   }
 
   private List<Integer> getMoney(List<String> lines, int numberOfTrips) {
@@ -133,5 +134,33 @@ public class BinarySearchIceCreamParlor {
 
   private String getMetadata(List<String> lines) {
     return lines.get(0);
+  }
+}
+
+class Trip {
+
+  private final int money;
+  private final List<Integer> flavors;
+
+  public Trip(int money, List<Integer> flavors) {
+    this.money = money;
+    this.flavors = flavors;
+  }
+
+  public int getMoney() {
+    return money;
+  }
+
+  public Integer getFlavor(int index) {
+    return flavors.get(index);
+  }
+
+  public int getFlavorsSize() {
+    return flavors.size();
+  }
+
+  @Override
+  public String toString() {
+    return money + "\n" + flavors;
   }
 }
