@@ -17,13 +17,12 @@ public class TestUtil {
   private TestUtil() {
   }
 
-  public static InputStream input(String line1, String... nextLines) throws IOException {
+  public static InputStream input(String... lines) throws IOException {
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     PrintStream printer = new PrintStream(out);
 
-    write(line1 + "\n", printer, defaultCharset());
-    for (int i = 0; i < nextLines.length; i++) {
-      write(nextLines[i] + "\n", printer, defaultCharset());
+    for (int i = 0; i < lines.length; i++) {
+      write(lines[i] + "\n", printer, defaultCharset());
     }
 
     printer.close();
