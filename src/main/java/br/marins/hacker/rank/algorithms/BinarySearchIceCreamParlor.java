@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class BinarySearchIceCreamParlor {
 
@@ -45,14 +46,12 @@ public class BinarySearchIceCreamParlor {
   }
 
   private ChosenFlavors calculateChosenFlavors(Trip trip) {
-    for (int i = 0; i < trip.getFlavorsSize() - 1; i++) {
-      for (int j = i + 1; j < trip.getFlavorsSize(); j++) {
-        Flavor flavor1 = trip.getFlavor(i);
-        Flavor flavor2 = trip.getFlavor(j);
-        int flavorsValue = flavor1.getPrice() + flavor2.getPrice();
-        if (trip.getMoney() == flavorsValue) {
-          return new ChosenFlavors(flavor1, flavor2);
-        }
+    for (int i = 0; i < trip.getFlavorsSize(); i++) {
+      Flavor flavor1 = trip.getFlavor(i);
+      int moneyLeft = trip.moneyLeftAfterBy(flavor1);
+      Optional<Flavor> flavor2 = trip.getFlavorWithValue(moneyLeft);
+      if (flavor2.isPresent() && !flavor1.equals(flavor2.get())) {
+        return new ChosenFlavors(flavor1, flavor2.get());
       }
     }
 
@@ -143,10 +142,6 @@ class Trip {
     this.flavors = toFlavors(flavors);
   }
 
-  public int getMoney() {
-    return money;
-  }
-
   public Flavor getFlavor(int index) {
     return flavors.get(index);
   }
@@ -171,6 +166,14 @@ class Trip {
     Collections.sort(flavors);
 
     return flavors;
+  }
+
+  public int moneyLeftAfterBy(Flavor flavor) {
+    return money - flavor.getPrice();
+  }
+
+  public Optional<Flavor> getFlavorWithValue(int moneyLeft) {
+    return flavors.stream().filter(f -> f.getPrice() == moneyLeft).findFirst();
   }
 }
 
