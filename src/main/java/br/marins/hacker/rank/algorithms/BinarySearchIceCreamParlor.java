@@ -13,6 +13,8 @@ import java.util.List;
 
 public class BinarySearchIceCreamParlor {
 
+  public static final int TRIP_OFFSET = 3;
+
   public static void main(String[] args) throws IOException {
     InputStream in = System.in;
 
@@ -24,19 +26,23 @@ public class BinarySearchIceCreamParlor {
 
   public List<String> calculateBestChoice(InputStream input) throws IOException {
     List<String> lines = readLines(input);
-    List<String> values = getValues(lines);
-    int money = getMoney(values);
+
     int numberOfTrips = getNumberOfTrips(lines);
+    List<Integer> moneyPerTrip = getMoney(lines, numberOfTrips);
+
 
     List<List<Integer>> flavorsPerTrip = getFlavors(lines, numberOfTrips);
 
-    return doCalculateBestChoice(money, flavorsPerTrip);
+    return doCalculateBestChoice(moneyPerTrip, flavorsPerTrip);
   }
 
-  private List<String> doCalculateBestChoice(int money, List<List<Integer>> flavorsPerTrip) {
+  private List<String> doCalculateBestChoice(List<Integer> moneyPerTryp, List<List<Integer>> flavorsPerTrip) {
     List<String> result = new ArrayList<>();
-    for (List<Integer> f : flavorsPerTrip) {
-      String chosenFlavors = calculateChosenFlavors(money, f);
+    for (int i = 0; i < flavorsPerTrip.size(); i++) {
+      Integer money = moneyPerTryp.get(i);
+      List<Integer> flavors = flavorsPerTrip.get(i);
+
+      String chosenFlavors = calculateChosenFlavors(money, flavors);
       result.add(chosenFlavors);
     }
     return result;
@@ -67,7 +73,7 @@ public class BinarySearchIceCreamParlor {
     for (int i = 0; i < numberOfTrips; i++) {
       List<Integer> flavors = extractFlavors(lines, valuesIndex);
       flavorPerTrip.add(flavors);
-      valuesIndex += 3;
+      valuesIndex += TRIP_OFFSET;
     }
 
     return flavorPerTrip;
@@ -79,8 +85,21 @@ public class BinarySearchIceCreamParlor {
           .collect(toList());
   }
 
-  private int getMoney(List<String> values) {
-    return Integer.parseInt(values.get(0));
+  private List<Integer> getMoney(List<String> lines, int numberOfTrips) {
+    List<Integer> moneyPerTrip = new ArrayList<>();
+    int moneyIndex = 1;
+
+    for (int i = 0; i < numberOfTrips; i++) {
+      Integer money = extractMoney(lines, moneyIndex);
+      moneyPerTrip.add(money);
+      moneyIndex += TRIP_OFFSET;
+    }
+
+    return moneyPerTrip;
+  }
+
+  private Integer extractMoney(List<String> lines, int moneyIndex) {
+    return Integer.valueOf(lines.get(moneyIndex));
   }
 
   private String result(int flavor1, int flavor2) {
@@ -114,15 +133,5 @@ public class BinarySearchIceCreamParlor {
 
   private String getMetadata(List<String> lines) {
     return lines.get(0);
-  }
-
-  private List<String> getValues(List<String> lines) {
-    List<String> values = new ArrayList<>();
-
-    for (int i = 1; i <= 3; i++) {
-      values.add(lines.get(i));
-    }
-
-    return values;
   }
 }
