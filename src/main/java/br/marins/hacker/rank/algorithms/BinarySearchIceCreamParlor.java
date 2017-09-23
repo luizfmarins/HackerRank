@@ -16,25 +16,28 @@ public class BinarySearchIceCreamParlor {
   public List<String> calculateBestChoice(InputStream input) throws IOException {
     List<String> lines = readLines(input);
     List<String> values = getValues(lines);
-
     int money = getMoney(values);
+
     List<Integer> flavors = getFlavors(lines);
 
-    int flavor1 = 0;
-    int flavor2 = 0;
+    return calculateChosenFlavors(money, flavors);
+  }
+
+  private List<String> calculateChosenFlavors(int money, List<Integer> flavors) {
+    int[] chosenFlavors = new int[2];
 
     for (int i = 0; i < flavors.size() - 1; i++) {
       for (int j = i + 1; j < flavors.size(); j++) {
         int flavorsValue = flavors.get(i) + flavors.get(j);
         if (money == flavorsValue) {
-          flavor1 = i;
-          flavor2 = j;
+          chosenFlavors[0] = i;
+          chosenFlavors[1] = j;
           break;
         }
       }
     }
 
-    return result(flavor1, flavor2);
+    return result(chosenFlavors[0], chosenFlavors[1]);
   }
 
   private List<Integer> getFlavors(List<String> lines) {
