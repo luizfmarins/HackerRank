@@ -36,4 +36,30 @@ public class BubbleSortTest {
         "First Element: 1",
         "Last Element: 3");
   }
+
+  @Test
+  public void oneElementArray() throws Exception {
+    InputStream input = input("1", "1");
+
+    List<String> result = sut.sort(input);
+
+    assertResult(result,
+        "[1]",
+        "Array is sorted in 0 swaps.",
+        "First Element: 1",
+        "Last Element: 1");
+  }
+
+  @Test
+  public void twoElementArray() throws Exception {
+    InputStream input = input("2", "2 1");
+
+    List<String> result = sut.sort(input);
+
+    assertResult(result,
+        "[1, 2]",
+        "Array is sorted in 1 swaps.",
+        "First Element: 1",
+        "Last Element: 2");
+  }
 }
