@@ -25,9 +25,42 @@ public class BinarySearchIceCreamParlor {
   }
 
   public List<String> calculateBestChoice(InputStream input) throws IOException {
-    List<String> lines = readLines(input);
+    List<Trip> trips = getTrips(input);
+
+    return doCalculateBestChoice(trips).stream()
+        .map(c -> c.getResult())
+        .collect(toList());
+  }
+
+  private List<ChosenFlavors> doCalculateBestChoice(List<Trip> trips) {
+    List<ChosenFlavors> result = new ArrayList<>();
+
+    for (Trip trip : trips) {
+      ChosenFlavors chosenFlavors = calculateChosenFlavors(trip);
+      result.add(chosenFlavors);
+    }
+
+    return result;
+  }
+
+  private ChosenFlavors calculateChosenFlavors(Trip trip) {
+    for (int i = 0; i < trip.getFlavorsSize() - 1; i++) {
+      for (int j = i + 1; j < trip.getFlavorsSize(); j++) {
+        int flavorsValue = trip.getFlavor(i) + trip.getFlavor(j);
+        if (trip.getMoney() == flavorsValue) {
+          return new ChosenFlavors(i, j);
+        }
+      }
+    }
+
+    throw new IllegalStateException();
+  }
+
+  private List<Trip> getTrips(InputStream in) throws IOException {
+    List<String> lines = readLines(in);
 
     int numberOfTrips = getNumberOfTrips(lines);
+
     List<Integer> moneyPerTrip = getMoney(lines, numberOfTrips);
     List<List<Integer>> flavorsPerTrip = getFlavors(lines, numberOfTrips);
 
@@ -36,34 +69,7 @@ public class BinarySearchIceCreamParlor {
       trips.add(new Trip(moneyPerTrip.get(i), flavorsPerTrip.get(i)));
     }
 
-    return doCalculateBestChoice(trips);
-  }
-
-  private List<String> doCalculateBestChoice(List<Trip> trips) {
-    List<String> result = new ArrayList<>();
-
-    for (Trip trip : trips) {
-      String chosenFlavors = calculateChosenFlavors(trip);
-      result.add(chosenFlavors);
-    }
-    return result;
-  }
-
-  private String calculateChosenFlavors(Trip trip) {
-    int[] chosenFlavors = new int[2];
-
-    for (int i = 0; i < trip.getFlavorsSize() - 1; i++) {
-      for (int j = i + 1; j < trip.getFlavorsSize(); j++) {
-        int flavorsValue = trip.getFlavor(i) + trip.getFlavor(j);
-        if (trip.getMoney() == flavorsValue) {
-          chosenFlavors[0] = i;
-          chosenFlavors[1] = j;
-          break;
-        }
-      }
-    }
-
-    return result(chosenFlavors[0], chosenFlavors[1]);
+    return trips;
   }
 
   private List<List<Integer>> getFlavors(List<String> lines, int numberOfTrips) {
@@ -101,19 +107,6 @@ public class BinarySearchIceCreamParlor {
 
   private Integer extractMoney(List<String> lines, int moneyIndex) {
     return Integer.valueOf(lines.get(moneyIndex));
-  }
-
-  private String result(int flavor1, int flavor2) {
-    flavor1++;
-    flavor2++;
-
-    List<Integer> flavors = asList(flavor1, flavor2).stream()
-        .sorted()
-        .collect(toList());
-
-    return String.valueOf(flavors.get(0))
-        + " "
-        + String.valueOf(flavors.get(1));
   }
 
   private List<String> readLines(InputStream input) throws IOException {
@@ -162,5 +155,33 @@ class Trip {
   @Override
   public String toString() {
     return money + "\n" + flavors;
+  }
+}
+
+class ChosenFlavors {
+
+  private final int flavor1;
+  private final int flavor2;
+
+  public ChosenFlavors(int flavor1, int flavor2) {
+    this.flavor1 = flavor1;
+    this.flavor2 = flavor2;
+  }
+
+  public String toString() {
+    return getResult();
+  }
+
+  public String getResult() {
+    int flavor1 = this.flavor1 + 1;
+    int flavor2 = this.flavor2 + 1;
+
+    List<Integer> flavors = asList(flavor1, flavor2).stream()
+        .sorted()
+        .collect(toList());
+
+    return String.valueOf(flavors.get(0))
+        + " "
+        + String.valueOf(flavors.get(1));
   }
 }
