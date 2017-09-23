@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class BinarySearchIceCreamParlor {
@@ -46,9 +47,11 @@ public class BinarySearchIceCreamParlor {
   private ChosenFlavors calculateChosenFlavors(Trip trip) {
     for (int i = 0; i < trip.getFlavorsSize() - 1; i++) {
       for (int j = i + 1; j < trip.getFlavorsSize(); j++) {
-        int flavorsValue = trip.getFlavor(i) + trip.getFlavor(j);
+        Flavor flavor1 = trip.getFlavor(i);
+        Flavor flavor2 = trip.getFlavor(j);
+        int flavorsValue = flavor1.getPrice() + flavor2.getPrice();
         if (trip.getMoney() == flavorsValue) {
-          return new ChosenFlavors(i, j);
+          return new ChosenFlavors(flavor1, flavor2);
         }
       }
     }
@@ -133,18 +136,18 @@ public class BinarySearchIceCreamParlor {
 class Trip {
 
   private final int money;
-  private final List<Integer> flavors;
+  private final List<Flavor> flavors;
 
   public Trip(int money, List<Integer> flavors) {
     this.money = money;
-    this.flavors = flavors;
+    this.flavors = toFlavors(flavors);
   }
 
   public int getMoney() {
     return money;
   }
 
-  public Integer getFlavor(int index) {
+  public Flavor getFlavor(int index) {
     return flavors.get(index);
   }
 
@@ -156,14 +159,27 @@ class Trip {
   public String toString() {
     return money + "\n" + flavors;
   }
+
+  private List<Flavor> toFlavors(List<Integer> flavorsInt) {
+    List<Flavor> flavors = new ArrayList<>();
+
+    for (int i = 0; i < flavorsInt.size(); i++) {
+      Integer price = flavorsInt.get(i);
+      flavors.add(new Flavor(i, price));
+    }
+
+    Collections.sort(flavors);
+
+    return flavors;
+  }
 }
 
 class ChosenFlavors {
 
-  private final int flavor1;
-  private final int flavor2;
+  private final Flavor flavor1;
+  private final Flavor flavor2;
 
-  public ChosenFlavors(int flavor1, int flavor2) {
+  public ChosenFlavors(Flavor flavor1, Flavor flavor2) {
     this.flavor1 = flavor1;
     this.flavor2 = flavor2;
   }
@@ -173,8 +189,8 @@ class ChosenFlavors {
   }
 
   public String getResult() {
-    int flavor1 = this.flavor1 + 1;
-    int flavor2 = this.flavor2 + 1;
+    int flavor1 = this.flavor1.getId();
+    int flavor2 = this.flavor2.getId();
 
     List<Integer> flavors = asList(flavor1, flavor2).stream()
         .sorted()
@@ -183,5 +199,29 @@ class ChosenFlavors {
     return String.valueOf(flavors.get(0))
         + " "
         + String.valueOf(flavors.get(1));
+  }
+}
+
+class Flavor implements Comparable<Flavor> {
+
+  private final int id;
+  private final int price;
+
+  public Flavor(int id, int value) {
+    this.id = id + 1;
+    this.price = value;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public int getPrice() {
+    return price;
+  }
+
+  @Override
+  public int compareTo(Flavor other) {
+    return price - other.price;
   }
 }
