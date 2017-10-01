@@ -3,17 +3,16 @@ package br.marins.hacker.rank.data.structures;
 public class TreesIsThisBinarySearchTree {
 
   boolean checkBST(Node root) {
-    return checkBSTLeft(root.data, root.left, root.data, root.data)
-      && checkBSTRight(root.data, root.right, root.data, root.data);
+    return checkBSTLeft(root.left, root.data)
+      && checkBSTRight(root.right, root.data);
   }
 
-  private boolean checkBSTRight(int father, Node node, int minValue, int maxValue) {
+  private boolean checkBSTRight(Node node, int father) {
     if (node == null) {
       return true;
     }
 
-    minValue = minValue < father ? father : minValue;
-    maxValue = maxValue < father ? father : maxValue;
+    int minValue = father;
 
     if (father > node.data) {
       return false;
@@ -27,32 +26,31 @@ public class TreesIsThisBinarySearchTree {
       return false;
     }
 
-    return checkBSTLeft(node.data, node.left, minValue, maxValue)
-        && checkBSTRight(node.data, node.right, minValue, maxValue);
+    return checkBSTLeft(node.left, node.data)
+        && checkBSTRight(node.right, node.data);
   }
 
-  private boolean checkBSTLeft(int father, Node root, int minValue, int maxValue) {
-    if (root == null) {
+  private boolean checkBSTLeft(Node node, int father) {
+    if (node == null) {
       return true;
     }
 
-    minValue = minValue < father ? father : minValue;
-    maxValue = maxValue < father ? father : maxValue;
+    int maxValue = father;
 
-    if (father < root.data) {
+    if (father < node.data) {
       return false;
     }
 
-    if (root.left != null && maxValue < root.left.data) {
+    if (node.left != null && maxValue < node.left.data) {
       return false;
     }
 
-    if (root.right != null && maxValue < root.right.data) {
+    if (node.right != null && maxValue < node.right.data) {
       return false;
     }
 
-    return checkBSTLeft(root.data, root.left, minValue, maxValue)
-        && checkBSTRight(root.data, root.right, minValue, maxValue);
+    return checkBSTLeft(node.left, node.data)
+        && checkBSTRight(node.right, node.data);
   }
 }
 
