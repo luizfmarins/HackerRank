@@ -80,6 +80,45 @@ public class TreesIsThisBinarySearchTreeTest {
   }
 
   @Test
+  public void violateMinValue_navigationRight() {
+    Node tree = newNode(3,
+        newNode(2),
+        newNode(5,
+            newNode(2),
+            newNode(6)));
+
+    assertFalse(sut.checkBST(tree));
+  }
+
+  @Test
+  /**
+   * Input:
+   * 3
+   * 1 2 3 4 5 6 7 8 9 10 11 13 12 14 15
+   * Output:
+   * No
+   */
+  public void test13() {
+    Node tree = newNode(8,
+        newNode(4,
+            newNode(2,
+                newNode(1),
+                newNode(3)),
+            newNode(6,
+                newNode(5),
+                newNode(7))),
+        newNode(13,
+            newNode(10,
+                newNode(9),
+                newNode(11)),
+            newNode(14,
+                newNode(12),
+                newNode(15))));
+
+    assertFalse(sut.checkBST(tree));
+  }
+
+  @Test
   public void twoLevels_binarySearch() {
     Node tree = newNode(3,
         newNode(2),
@@ -102,6 +141,7 @@ public class TreesIsThisBinarySearchTreeTest {
   @Test
   public void oneLevel() {
     Node tree = newNode(3);
+
 
     assertTrue(sut.checkBST(tree));
   }
