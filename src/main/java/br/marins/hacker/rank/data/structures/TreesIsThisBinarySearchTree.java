@@ -4,14 +4,14 @@ public class TreesIsThisBinarySearchTree {
 
   boolean checkBST(Node root) {
     if (root.left != null) {
-      boolean isRight = checkBST(root.data, root.left, root.left.data, root.data, false);
-      if (!isRight) {
+      boolean isCorrect = checkBSTLeft(root.data, root.left, root.left.data, root.data);
+      if (!isCorrect) {
         return false;
       }
     }
     if (root.right != null) {
-      boolean isRight = checkBST(root.data, root.right, root.data, root.right.data, true);
-      if (!isRight) {
+      boolean isCorrect = checkBSTRight(root.data, root.right, root.data, root.right.data);
+      if (!isCorrect) {
         return false;
       }
     }
@@ -19,7 +19,7 @@ public class TreesIsThisBinarySearchTree {
     return true;
   }
 
-  private boolean checkBST(int father, Node root, Integer minValue, Integer maxValue, boolean isRight) {
+  private boolean checkBSTRight(int father, Node root, Integer minValue, Integer maxValue) {
     if (root == null) {
       return true;
     }
@@ -27,42 +27,52 @@ public class TreesIsThisBinarySearchTree {
     minValue = root.data < minValue ? root.data : minValue;
     maxValue = root.data > maxValue ? root.data : maxValue;
 
-    if (!isRight) {
-      if (father < root.data) {
-        return false;
-      }
-    } else {
-      if (father > root.data) {
-        return false;
-      }
+    if (father > root.data) {
+      return false;
     }
 
     if (root.left != null) {
-      if (isRight) {
-        if (minValue > root.left.data) {
-          return false;
-        }
-      } else {
-        if (maxValue < root.left.data) {
-          return false;
-        }
+      if (minValue > root.left.data) {
+        return false;
       }
     }
 
     if (root.right != null) {
-      if (isRight) {
-        if (minValue > root.right.data) {
-          return false;
-        }
-      } else {
-        if (maxValue < root.right.data) {
-          return false;
-        }
+      if (minValue > root.right.data) {
+        return false;
       }
     }
 
-    return checkBST(root.data, root.left, minValue, maxValue, false)
-        && checkBST(root.data, root.right, minValue, maxValue, true);
+    return checkBSTLeft(root.data, root.left, minValue, maxValue)
+        && checkBSTRight(root.data, root.right, minValue, maxValue);
+  }
+
+  private boolean checkBSTLeft(int father, Node root, Integer minValue, Integer maxValue) {
+    if (root == null) {
+      return true;
+    }
+
+    minValue = root.data < minValue ? root.data : minValue;
+    maxValue = root.data > maxValue ? root.data : maxValue;
+
+    if (father < root.data) {
+      return false;
+    }
+
+    if (root.left != null) {
+      if (maxValue < root.left.data) {
+        return false;
+      }
+    }
+
+    if (root.right != null) {
+      if (maxValue < root.right.data) {
+        return false;
+      }
+    }
+
+    return checkBSTLeft(root.data, root.left, minValue, maxValue)
+        && checkBSTRight(root.data, root.right, minValue, maxValue);
   }
 }
 
