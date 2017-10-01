@@ -12,8 +12,8 @@ public class TreesIsThisBinarySearchTree {
       return true;
     }
 
-    minValue = node.data < minValue ? node.data : minValue;
-    maxValue = node.data > maxValue ? node.data : maxValue;
+    minValue = minValue < father ? father : minValue;
+    maxValue = maxValue < father ? father : maxValue;
 
     if (father > node.data) {
       return false;
@@ -36,8 +36,8 @@ public class TreesIsThisBinarySearchTree {
       return true;
     }
 
-    minValue = root.data < minValue ? root.data : minValue;
-    maxValue = root.data > maxValue ? root.data : maxValue;
+    minValue = minValue < father ? father : minValue;
+    maxValue = maxValue < father ? father : maxValue;
 
     if (father < root.data) {
       return false;
