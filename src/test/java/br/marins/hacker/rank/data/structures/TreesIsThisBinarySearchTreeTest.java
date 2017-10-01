@@ -79,6 +79,33 @@ public class TreesIsThisBinarySearchTreeTest {
     assertFalse(sut.checkBST(tree));
   }
 
+  @Test
+  public void twoLevels_binarySearch() {
+    Node tree = newNode(3,
+        newNode(2),
+        newNode(6)
+    );
+
+    assertTrue(sut.checkBST(tree));
+  }
+
+  @Test
+  public void twoLevels_notBinarySearch() {
+    Node tree = newNode(3,
+        newNode(6),
+        newNode(2)
+    );
+
+    assertFalse(sut.checkBST(tree));
+  }
+
+  @Test
+  public void oneLevel() {
+    Node tree = newNode(3);
+
+    assertTrue(sut.checkBST(tree));
+  }
+
   private Node newNode(int data, Node left, Node right) {
     Node node = newNode(data);
     node.left = left;

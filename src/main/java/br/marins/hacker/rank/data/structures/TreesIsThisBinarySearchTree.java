@@ -3,8 +3,27 @@ package br.marins.hacker.rank.data.structures;
 public class TreesIsThisBinarySearchTree {
 
   boolean checkBST(Node root) {
-    return checkBST(root.left, root.left.data, root.data, false)
-        && checkBST(root.right, root.data, root.right.data, true);
+    if (root.left != null) {
+      if (root.data < root.left.data) {
+        return false;
+      }
+      boolean isLeftRight = checkBST(root.left, root.left.data, root.data, false);
+      if (!isLeftRight) {
+        return false;
+      }
+    }
+
+    if (root.right != null) {
+      if (root.data > root.right.data) {
+        return false;
+      }
+      boolean isRightRight = checkBST(root.right, root.data, root.right.data, true);
+      if (!isRightRight) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   private boolean checkBST(Node root, Integer minValue, Integer maxValue, boolean isRight) {
