@@ -4,6 +4,7 @@ import static br.marins.hacker.rank.util.TestUtil.input;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
+import java.io.IOException;
 import org.junit.Test;
 
 public class StringsMakingAnagramsTest {
@@ -12,29 +13,28 @@ public class StringsMakingAnagramsTest {
 
   @Test
   public void sampleTest() throws Exception {
-    int numberNeeded = sut.numberNeededToRemove(input("cde", "abc"));
-
-    assertThat(numberNeeded, equalTo(4));
+    assertNumbersRemovedToMakeAnagram("cde", "abc", 4);
   }
 
   @Test
   public void sampleTest_differentSizes_firstBigger() throws Exception {
-    int numberNeeded = sut.numberNeededToRemove(input("cdef", "abc"));
-
-    assertThat(numberNeeded, equalTo(5));
+    assertNumbersRemovedToMakeAnagram("cdef", "abc", 5);
   }
 
   @Test
   public void sampleTest_differentSizes_secondBigger() throws Exception {
-    int numberNeeded = sut.numberNeededToRemove(input("cde", "abcf"));
-
-    assertThat(numberNeeded, equalTo(5));
+    assertNumbersRemovedToMakeAnagram("cde", "abcf", 5);
   }
 
   @Test
   public void alreadyAnagram() throws Exception {
-    int numberNeeded = sut.numberNeededToRemove(input("bacdc", "dcbac"));
+    assertNumbersRemovedToMakeAnagram("bacdc", "dcbac", 0);
+  }
 
-    assertThat(numberNeeded, equalTo(0));
+  private void assertNumbersRemovedToMakeAnagram(String str1, String str2,
+      int expectedNumbersRemoved) throws IOException {
+    int numberNeeded = sut.numberNeededToRemove(input(str1, str2));
+
+    assertThat(numberNeeded, equalTo(expectedNumbersRemoved));
   }
 }
