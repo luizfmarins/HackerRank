@@ -4,21 +4,14 @@ public class TreesIsThisBinarySearchTree {
 
   boolean checkBST(Node root) {
     if (root.left != null) {
-      if (root.data < root.left.data) {
-        return false;
-      }
-      boolean isLeftRight = checkBST(root.left, root.left.data, root.data, false);
-      if (!isLeftRight) {
+      boolean isRight = checkBST(root.data, root.left, root.left.data, root.data, false);
+      if (!isRight) {
         return false;
       }
     }
-
     if (root.right != null) {
-      if (root.data > root.right.data) {
-        return false;
-      }
-      boolean isRightRight = checkBST(root.right, root.data, root.right.data, true);
-      if (!isRightRight) {
+      boolean isRight = checkBST(root.data, root.right, root.data, root.right.data, true);
+      if (!isRight) {
         return false;
       }
     }
@@ -26,7 +19,7 @@ public class TreesIsThisBinarySearchTree {
     return true;
   }
 
-  private boolean checkBST(Node root, Integer minValue, Integer maxValue, boolean isRight) {
+  private boolean checkBST(int father, Node root, Integer minValue, Integer maxValue, boolean isRight) {
     if (root == null) {
       return true;
     }
@@ -34,11 +27,17 @@ public class TreesIsThisBinarySearchTree {
     minValue = root.data < minValue ? root.data : minValue;
     maxValue = root.data > maxValue ? root.data : maxValue;
 
-    if (root.left != null) {
-      if (root.data < root.left.data) {
+    if (!isRight) {
+      if (father < root.data) {
         return false;
       }
+    } else {
+      if (father > root.data) {
+        return false;
+      }
+    }
 
+    if (root.left != null) {
       if (isRight) {
         if (minValue > root.left.data) {
           return false;
@@ -51,10 +50,6 @@ public class TreesIsThisBinarySearchTree {
     }
 
     if (root.right != null) {
-      if (root.data > root.right.data) {
-        return false;
-      }
-
       if (isRight) {
         if (minValue > root.right.data) {
           return false;
@@ -66,8 +61,8 @@ public class TreesIsThisBinarySearchTree {
       }
     }
 
-    return checkBST(root.left, minValue, maxValue, false)
-        && checkBST(root.right, minValue, maxValue, true);
+    return checkBST(root.data, root.left, minValue, maxValue, false)
+        && checkBST(root.data, root.right, minValue, maxValue, true);
   }
 }
 
