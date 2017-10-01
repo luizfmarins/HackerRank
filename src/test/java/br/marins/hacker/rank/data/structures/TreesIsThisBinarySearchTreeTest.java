@@ -63,6 +63,22 @@ public class TreesIsThisBinarySearchTreeTest {
     assertFalse(isBinarySearch);
   }
 
+  @Test
+  public void violateMaxValue_navigatingLeft() {
+    Node tree = newNode(3,
+        newNode(2,
+            newNode(1),
+            newNode(4)
+        ),
+        newNode(6,
+            newNode(5),
+            newNode(7)
+        )
+    );
+
+    assertFalse(sut.checkBST(tree));
+  }
+
   private Node newNode(int data, Node left, Node right) {
     Node node = newNode(data);
     node.left = left;
