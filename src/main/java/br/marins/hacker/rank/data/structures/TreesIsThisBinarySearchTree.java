@@ -3,51 +3,35 @@ package br.marins.hacker.rank.data.structures;
 public class TreesIsThisBinarySearchTree {
 
   boolean checkBST(Node root) {
-    if (root.left != null) {
-      boolean isCorrect = checkBSTLeft(root.data, root.left, root.left.data, root.data);
-      if (!isCorrect) {
-        return false;
-      }
-    }
-    if (root.right != null) {
-      boolean isCorrect = checkBSTRight(root.data, root.right, root.data, root.right.data);
-      if (!isCorrect) {
-        return false;
-      }
-    }
-
-    return true;
+    return checkBSTLeft(root.data, root.left, root.data, root.data)
+      && checkBSTRight(root.data, root.right, root.data, root.data);
   }
 
-  private boolean checkBSTRight(int father, Node root, Integer minValue, Integer maxValue) {
-    if (root == null) {
+  private boolean checkBSTRight(int father, Node node, int minValue, int maxValue) {
+    if (node == null) {
       return true;
     }
 
-    minValue = root.data < minValue ? root.data : minValue;
-    maxValue = root.data > maxValue ? root.data : maxValue;
+    minValue = node.data < minValue ? node.data : minValue;
+    maxValue = node.data > maxValue ? node.data : maxValue;
 
-    if (father > root.data) {
+    if (father > node.data) {
       return false;
     }
 
-    if (root.left != null) {
-      if (minValue > root.left.data) {
-        return false;
-      }
+    if (node.left != null && minValue > node.left.data) {
+      return false;
     }
 
-    if (root.right != null) {
-      if (minValue > root.right.data) {
-        return false;
-      }
+    if (node.right != null && minValue > node.right.data) {
+      return false;
     }
 
-    return checkBSTLeft(root.data, root.left, minValue, maxValue)
-        && checkBSTRight(root.data, root.right, minValue, maxValue);
+    return checkBSTLeft(node.data, node.left, minValue, maxValue)
+        && checkBSTRight(node.data, node.right, minValue, maxValue);
   }
 
-  private boolean checkBSTLeft(int father, Node root, Integer minValue, Integer maxValue) {
+  private boolean checkBSTLeft(int father, Node root, int minValue, int maxValue) {
     if (root == null) {
       return true;
     }
@@ -59,16 +43,12 @@ public class TreesIsThisBinarySearchTree {
       return false;
     }
 
-    if (root.left != null) {
-      if (maxValue < root.left.data) {
-        return false;
-      }
+    if (root.left != null && maxValue < root.left.data) {
+      return false;
     }
 
-    if (root.right != null) {
-      if (maxValue < root.right.data) {
-        return false;
-      }
+    if (root.right != null && maxValue < root.right.data) {
+      return false;
     }
 
     return checkBSTLeft(root.data, root.left, minValue, maxValue)
