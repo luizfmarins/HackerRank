@@ -16,4 +16,25 @@ public class StringsMakingAnagramsTest {
 
     assertThat(numberNeeded, equalTo(4));
   }
+
+  @Test
+  public void sampleTest_differentSizes_firstBigger() throws Exception {
+    int numberNeeded = sut.numberNeeded(input("cdef", "abc"));
+
+    assertThat(numberNeeded, equalTo(5));
+  }
+
+  @Test
+  public void sampleTest_differentSizes_secondBigger() throws Exception {
+    int numberNeeded = sut.numberNeeded(input("cde", "abcf"));
+
+    assertThat(numberNeeded, equalTo(5));
+  }
+
+  @Test
+  public void alreadyAnagram() throws Exception {
+    int numberNeeded = sut.numberNeeded(input("bacdc", "dcbac"));
+
+    assertThat(numberNeeded, equalTo(0));
+  }
 }
