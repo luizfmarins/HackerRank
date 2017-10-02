@@ -119,6 +119,21 @@ public class TreesIsThisBinarySearchTreeTest {
   }
 
   @Test
+  public void violateMinValue_twoFathersUp() {
+    Node tree = newNode(8,
+        null,
+        newNode(15,
+            null,
+            newNode(20,
+                newNode(18,
+                    newNode(14),
+                    newNode(19)),
+                null)));
+
+    assertFalse(sut.checkBST(tree));
+  }
+
+  @Test
   public void twoLevels_binarySearch() {
     Node tree = newNode(3,
         newNode(2),

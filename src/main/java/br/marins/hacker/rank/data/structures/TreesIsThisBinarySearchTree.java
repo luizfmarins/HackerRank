@@ -3,11 +3,11 @@ package br.marins.hacker.rank.data.structures;
 public class TreesIsThisBinarySearchTree {
 
   boolean checkBST(Node root) {
-    return checkBSTLeft(root.left, root.data)
-      && checkBSTRight(root.right, root.data);
+    return checkBSTLeft(root.left, root.data, Integer.MIN_VALUE)
+      && checkBSTRight(root.right, root.data, Integer.MAX_VALUE);
   }
 
-  private boolean checkBSTRight(Node node, int father) {
+  private boolean checkBSTRight(Node node, int father, int maxValue) {
     if (node == null) {
       return true;
     }
@@ -18,19 +18,19 @@ public class TreesIsThisBinarySearchTree {
       return false;
     }
 
-    if (node.left != null && minValue > node.left.data) {
+    if (node.data < minValue) {
       return false;
     }
 
-    if (node.right != null && minValue > node.right.data) {
+    if (node.data > maxValue) {
       return false;
     }
 
-    return checkBSTLeft(node.left, node.data)
-        && checkBSTRight(node.right, node.data);
+    return checkBSTLeft(node.left, node.data, minValue)
+        && checkBSTRight(node.right, node.data, maxValue);
   }
 
-  private boolean checkBSTLeft(Node node, int father) {
+  private boolean checkBSTLeft(Node node, int father, int minValue) {
     if (node == null) {
       return true;
     }
@@ -41,16 +41,16 @@ public class TreesIsThisBinarySearchTree {
       return false;
     }
 
-    if (node.left != null && maxValue < node.left.data) {
+    if (node.data < minValue) {
       return false;
     }
 
-    if (node.right != null && maxValue < node.right.data) {
+    if (node.data > maxValue) {
       return false;
     }
 
-    return checkBSTLeft(node.left, node.data)
-        && checkBSTRight(node.right, node.data);
+    return checkBSTLeft(node.left, node.data, minValue)
+        && checkBSTRight(node.right, node.data, maxValue);
   }
 }
 
