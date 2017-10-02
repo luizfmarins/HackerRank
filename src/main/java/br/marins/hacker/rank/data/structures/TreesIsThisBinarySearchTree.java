@@ -3,54 +3,38 @@ package br.marins.hacker.rank.data.structures;
 public class TreesIsThisBinarySearchTree {
 
   boolean checkBST(Node root) {
-    return checkBSTLeft(root.left, root.data, Integer.MIN_VALUE)
-      && checkBSTRight(root.right, root.data, Integer.MAX_VALUE);
+    return checkBSTLeft(root.left, Integer.MIN_VALUE, root.data)
+        && checkBSTRight(root.right, root.data, Integer.MAX_VALUE);
   }
 
-  private boolean checkBSTRight(Node node, int father, int maxValue) {
+  private boolean checkBSTLeft(Node node, int minValue, int maxValue) {
     if (node == null) {
       return true;
     }
 
-    int minValue = father;
-
-    if (father > node.data) {
+    if (violateMinMaxValues(node, minValue, maxValue)) {
       return false;
     }
 
-    if (node.data < minValue) {
-      return false;
-    }
-
-    if (node.data > maxValue) {
-      return false;
-    }
-
-    return checkBSTLeft(node.left, node.data, minValue)
+    return checkBSTLeft(node.left, minValue, node.data)
         && checkBSTRight(node.right, node.data, maxValue);
   }
 
-  private boolean checkBSTLeft(Node node, int father, int minValue) {
+  private boolean checkBSTRight(Node node, int minValue, int maxValue) {
     if (node == null) {
       return true;
     }
 
-    int maxValue = father;
-
-    if (father < node.data) {
+    if (violateMinMaxValues(node, minValue, maxValue)) {
       return false;
     }
 
-    if (node.data < minValue) {
-      return false;
-    }
-
-    if (node.data > maxValue) {
-      return false;
-    }
-
-    return checkBSTLeft(node.left, node.data, minValue)
+    return checkBSTLeft(node.left, minValue, node.data)
         && checkBSTRight(node.right, node.data, maxValue);
+  }
+
+  private boolean violateMinMaxValues(Node node, int minValue, int maxValue) {
+    return node.data < minValue || node.data > maxValue;
   }
 }
 
