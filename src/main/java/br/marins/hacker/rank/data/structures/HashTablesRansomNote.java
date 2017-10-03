@@ -5,8 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class HashTablesRansomNote {
 
@@ -28,14 +29,36 @@ public class HashTablesRansomNote {
   }
 
   private boolean canUseTheMagazine(String[] wordsNote, String[] wordsMagazine) {
-    List<String> listWordsNote = Arrays.asList(wordsNote);
-    List<String> listWordsMagazine = new ArrayList<>(Arrays.asList(wordsMagazine));
+    Map<String, Integer> magazineWordsAmount = getWordsAmount(wordsMagazine);
 
-    boolean isMissingWord = listWordsNote.stream().filter(w -> {
-      return !listWordsMagazine.remove(w);
-    }).findFirst().isPresent();
+    for (String w : wordsNote) {
+      Integer availableAmount = magazineWordsAmount.get(w);
 
-    return !isMissingWord;
+      if (isAvailable(availableAmount)) {
+        return false;
+      }
+
+      availableAmount--;
+      magazineWordsAmount.put(w, availableAmount);
+    }
+
+    return true;
+  }
+
+  private boolean isAvailable(Integer availableAmount) {
+    return availableAmount == null || availableAmount < 1;
+  }
+
+  private Map<String, Integer> getWordsAmount(String[] words) {
+    Map<String, Integer> wordsAmount = new HashMap<>();
+
+    for (String w : words) {
+      Integer amount = wordsAmount.get(w);
+      amount = amount == null ? 1 : amount + 1;
+      wordsAmount.put(w, amount);
+    }
+
+    return wordsAmount;
   }
 
   private String[] getWordsMagazine(List<String> lines) {
