@@ -28,42 +28,6 @@ public class TreesIsThisBinarySearchTreeTest {
   }
 
   @Test
-  public void leftEqual() {
-    Node tree = newNode(4,
-        newNode(4,
-            newNode(1),
-            newNode(3)
-        ),
-        newNode(6,
-            newNode(5),
-            newNode(7)
-        )
-    );
-
-    boolean isBinarySearch = sut.checkBST(tree);
-
-    assertFalse(isBinarySearch);
-  }
-
-  @Test
-  public void rightEqual() {
-    Node tree = newNode(4,
-        newNode(2,
-            newNode(1),
-            newNode(3)
-        ),
-        newNode(4,
-            newNode(5),
-            newNode(7)
-        )
-    );
-
-    boolean isBinarySearch = sut.checkBST(tree);
-
-    assertFalse(isBinarySearch);
-  }
-
-  @Test
   public void violateMaxValue_navigatingLeft() {
     Node tree = newNode(3,
         newNode(2,
@@ -157,8 +121,27 @@ public class TreesIsThisBinarySearchTreeTest {
   public void oneLevel() {
     Node tree = newNode(3);
 
-
     assertTrue(sut.checkBST(tree));
+  }
+
+  @Test
+  public void duplicateValue_left() {
+    Node tree = newNode(3,
+        newNode(3),
+        newNode(4)
+    );
+
+    assertFalse(sut.checkBST(tree));
+  }
+
+  @Test
+  public void duplicateValue_right() {
+    Node tree = newNode(3,
+        newNode(2),
+        newNode(3)
+    );
+
+    assertFalse(sut.checkBST(tree));
   }
 
   private Node newNode(int data, Node left, Node right) {

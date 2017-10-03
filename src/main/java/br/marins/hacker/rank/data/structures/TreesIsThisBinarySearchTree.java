@@ -34,7 +34,7 @@ public class TreesIsThisBinarySearchTree {
   }
 
   private boolean violateMinMaxValues(Node node, int minValue, int maxValue) {
-    return node.data < minValue || node.data > maxValue;
+    return node.data <= minValue || node.data >= maxValue;
   }
 }
 
