@@ -22,6 +22,39 @@ public class HashTablesRansomNoteTest {
     assertCanUseTheMagazine(input);
   }
 
+  @Test
+  public void missingOneWord() throws Exception {
+    InputStream input = input(
+        "6 4",
+        "give me one today night",
+        "give one grand today"
+    );
+
+    assertCanNotUseTheMagazine(input);
+  }
+
+  @Test
+  public void sameWordUsedTwoTimes_onlyOneTimeAvailableInMagazine() throws Exception {
+    InputStream input = input(
+        "6 4",
+        "give me one grand today night",
+        "give one one grand today"
+    );
+
+    assertCanNotUseTheMagazine(input);
+  }
+
+  @Test
+  public void sameWordUsedTwoTimes_bolthAvailableInMagazine() throws Exception {
+    InputStream input = input(
+        "6 4",
+        "give me one grand one today night",
+        "give one one grand today"
+    );
+
+    assertCanUseTheMagazine(input);
+  }
+
   private void assertCanUseTheMagazine(InputStream input) throws Exception {
     boolean canUseTheMagazine = sut.canUseTheMagazine(input);
 

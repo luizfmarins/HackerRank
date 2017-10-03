@@ -21,11 +21,11 @@ public class HashTablesRansomNote {
 
   private boolean canUseTheMagazine(String[] wordsNote, String[] wordsMagazine) {
     List<String> listWordsNote = asList(wordsNote);
-    List<String> listWordsMagazine = asList(wordsMagazine);
+    List<String> listWordsMagazine = new ArrayList<>(asList(wordsMagazine));
 
-    boolean isMissingWord = listWordsNote.stream().filter(w -> !listWordsMagazine.contains(w))
-        .findFirst()
-        .isPresent();
+    boolean isMissingWord = listWordsNote.stream().filter(w -> {
+      return !listWordsMagazine.remove(w);
+    }).findFirst().isPresent();
 
     return !isMissingWord;
   }
