@@ -9,19 +9,27 @@ public class QueuesTaleOfTwoStacks {
     Stack<T> stackNewestOnTop = new Stack<T>();
     Stack<T> stackOldestOnTop = new Stack<T>();
 
-    public void enqueue(T value) { // Push onto newest stack
+    public void enqueue(T value) {
+      moveElements(stackOldestOnTop, stackNewestOnTop);
 
+      stackOldestOnTop.push(value);
+
+      moveElements(stackNewestOnTop, stackOldestOnTop);
+    }
+
+    private void moveElements(Stack<T> src, Stack<T> dest) {
+      while (!src.isEmpty())
+        dest.push(src.pop());
     }
 
     public T peek() {
-      return null;
+      return stackOldestOnTop.peek();
     }
 
     public T dequeue() {
-      return null;
+      return stackOldestOnTop.pop();
     }
   }
-
 
   public static void main(String[] args) {
     MyQueue<Integer> queue = new MyQueue<Integer>();
