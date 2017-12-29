@@ -10,24 +10,29 @@ public class QueuesTaleOfTwoStacks {
     Stack<T> stackOldestOnTop = new Stack<T>();
 
     public void enqueue(T value) {
-      moveElements(stackOldestOnTop, stackNewestOnTop);
+      if (!stackOldestOnTop.isEmpty())
+        moveElements(stackOldestOnTop, stackNewestOnTop);
 
-      stackOldestOnTop.push(value);
+      stackNewestOnTop.push(value);
+    }
 
-      moveElements(stackNewestOnTop, stackOldestOnTop);
+    public T peek() {
+      if (!stackNewestOnTop.isEmpty())
+        moveElements(stackNewestOnTop, stackOldestOnTop);
+
+      return stackOldestOnTop.peek();
+    }
+
+    public T dequeue() {
+      if (!stackNewestOnTop.isEmpty())
+        moveElements(stackNewestOnTop, stackOldestOnTop);
+
+      return stackOldestOnTop.pop();
     }
 
     private void moveElements(Stack<T> src, Stack<T> dest) {
       while (!src.isEmpty())
         dest.push(src.pop());
-    }
-
-    public T peek() {
-      return stackOldestOnTop.peek();
-    }
-
-    public T dequeue() {
-      return stackOldestOnTop.pop();
     }
   }
 
