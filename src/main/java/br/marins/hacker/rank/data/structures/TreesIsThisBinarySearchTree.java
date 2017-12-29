@@ -36,13 +36,13 @@ public class TreesIsThisBinarySearchTree {
   private boolean violateMinMaxValues(Node node, int minValue, int maxValue) {
     return node.data <= minValue || node.data >= maxValue;
   }
-}
 
-class Node {
+  static class Node {
 
-  int data;
+    int data;
 
-  Node left;
+    Node left;
 
-  Node right;
+    Node right;
+  }
 }

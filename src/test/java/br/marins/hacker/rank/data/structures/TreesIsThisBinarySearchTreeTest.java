@@ -3,6 +3,7 @@ package br.marins.hacker.rank.data.structures;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import br.marins.hacker.rank.data.structures.TreesIsThisBinarySearchTree.Node;
 import org.junit.Test;
 
 public class TreesIsThisBinarySearchTreeTest {
