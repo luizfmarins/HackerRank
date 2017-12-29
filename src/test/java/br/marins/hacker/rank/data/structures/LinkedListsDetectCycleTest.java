@@ -37,7 +37,7 @@ public class LinkedListsDetectCycleTest {
   }
 
   @Test
-  public void twoOneElement_withCycle() {
+  public void twoElements_withCycle() {
     Node second = new Node(2);
     Node head = new Node(1, second);
     second.next = head;
@@ -48,7 +48,7 @@ public class LinkedListsDetectCycleTest {
   }
 
   @Test
-  public void TreeOneElement_withCycle() {
+  public void treeElements_withCycle() {
     Node third = new Node(3);
     Node second = new Node(2, third);
     Node head = new Node(1, second);
@@ -57,5 +57,22 @@ public class LinkedListsDetectCycleTest {
     boolean hasCycle = sut.hasCycle(head);
 
     assertThat(hasCycle, is(true));
+  }
+
+  @Test
+  public void avoidKeepingState() {
+    twoElements_withCycle();
+    onlyOneElement_noCycle();
+  }
+
+  @Test
+  public void treeElements_duplicateData_noCycle() {
+    Node third = new Node(2);
+    Node second = new Node(2, third);
+    Node head = new Node(1, second);
+
+    boolean hasCycle = sut.hasCycle(head);
+
+    assertThat(hasCycle, is(false));
   }
 }

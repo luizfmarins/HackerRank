@@ -5,17 +5,21 @@ import java.util.Set;
 
 public class LinkedListsDetectCycle {
 
-  private final Set<Integer> nodesVisited = new HashSet<>();
-
   public boolean hasCycle(Node node) {
+    Set<Node> nodesVisited = new HashSet<>(); // TODO Node do not implement hashCode
+
+    return hasCycle(node, nodesVisited);
+  }
+
+  private boolean hasCycle(Node node, Set<Node> nodesVisited) {
     if (node == null)
       return false;
 
-    boolean isNewNode = nodesVisited.add(node.data);
+    boolean isNewNode = nodesVisited.add(node);
     if (!isNewNode)
       return true;
 
-    return hasCycle(node.next);
+    return hasCycle(node.next, nodesVisited);
   }
 
   static class Node {
